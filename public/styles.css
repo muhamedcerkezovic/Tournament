@@ -62,3 +62,6 @@ li {
     position: relative;
     padding: 0.5rem;
   }
+  .logo{
+    width: 50px;
+  }

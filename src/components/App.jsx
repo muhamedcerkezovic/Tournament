@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
+import Header from "./Header";
+import Input from "./Input";
+import ToAddPlayer from "./ToAddPlayer";
 
 function App(){
-const [inputPlayer,setInputPlayer]=useState("")
-const [player,setPlayer]=useState([]);
 
+    const [players,setPlayer]=useState([]);
+    function savePlayer(inputPlayer){
+        setPlayer(previousPlayer =>{
+            return [...previousPlayer, inputPlayer]
+        });
+     }
 
-function handleChange(event){
-    const newValue=event.target.value;
-    setInputPlayer(newValue);
-}
- function savePlayer(){
-    setPlayer(previousPlayer =>{
-        return [...previousPlayer, inputPlayer]
-    });
-    setInputPlayer("");
- }
+     function deletePlayer(id) {
+        setPlayer(previousPlayer => {
+            return previousPlayer.filter((player, index) => {
+                return index !== id;
+            })
+        })
+    }
 
     return (
     
     <div className="container">
-    <div className="header">
-<h1>Bingo Open</h1>
-    </div>
+<Header />
     
-    <div className="inputi">
-<input  onChange={handleChange} type="text" placeholder="Ime igrača" value={inputPlayer} />
-<button onClick={savePlayer}type="button" id="dugme" className="btn btn-success"> UNESI </button>  
-</div>
+   <Input onAdd={savePlayer}/>
   <div className="lista">
-    <ul>
-{player.map(toAddPlayer =>(
-    <li>{toAddPlayer}</li>
-))}
-    </ul>
-  </div>
+            <ol>
+                {players.map((toAddPlayer, index) => (
+                    <ToAddPlayer
+                        key={index}
+                        id={index}
+                        text={toAddPlayer}
+                        onChecked={deletePlayer}
+                    />
+                ))}
+            </ol>
+        </div>
   </div>
   
     
